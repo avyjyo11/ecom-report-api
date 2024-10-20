@@ -2,7 +2,9 @@ package repositories
 
 import (
 	"context"
-	"ecom-report-api/db"
+	"log"
+
+	"github.com/avyjyo11/ecom-report-api/db"
 )
 
 // ReportRepository handles database queries for reports
@@ -14,14 +16,17 @@ func NewReportRepository() *ReportRepository {
 }
 
 // FetchSalesReport fetches sales report from the database
-func (rr *ReportRepository) FetchSalesReport() (interface{}, error) {
+func (rr ReportRepository) FetchSalesReport() (interface{}, error) {
     pool := db.GetPool()
+
+    log.Println("in reportrepo fecthsales");
 
     // Example query, actual logic will depend on requirements
     rows, err := pool.Query(context.Background(), `
-        SELECT SUM(total_amount) as total_sales FROM transactions
+        SELECT * from transactions
     `)
     if err != nil {
+        log.Fatalf("failed to query: %v", err)
         return nil, err
     }
     defer rows.Close()

@@ -1,7 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS ecomm_schema;
-
-SET search_path TO ecomm_schema;
-
 -- Create Customers table
 CREATE TABLE IF NOT EXISTS Customers (
     id SERIAL PRIMARY KEY,
@@ -50,7 +46,3 @@ CREATE TABLE IF NOT EXISTS Transactions (
     FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE
 );
 
--- Create indexes to improve performance
-CREATE INDEX idx_customer_signup_date ON Customers (signup_date);
-CREATE INDEX idx_order_date ON Orders (order_date);
-CREATE INDEX idx_product_category ON Products (category);

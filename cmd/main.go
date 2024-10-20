@@ -1,13 +1,15 @@
 package main
 
 import (
-	"ecom-report-api/config"
-	"ecom-report-api/controllers"
-	"ecom-report-api/db"
-	"ecom-report-api/repositories"
-	"ecom-report-api/services"
+	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/avyjyo11/ecom-report-api/config"
+	"github.com/avyjyo11/ecom-report-api/controllers"
+	"github.com/avyjyo11/ecom-report-api/db"
+	"github.com/avyjyo11/ecom-report-api/repositories"
+	"github.com/avyjyo11/ecom-report-api/services"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -15,11 +17,17 @@ import (
 func main() {
     // Load configuration and initialize the DB connection pool
     cfg := config.LoadConfig()
-    _, err := db.InitializePool(cfg)
+    connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
+        cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.SSLMode)
+
+    _, err := db.InitializePool(connStr)
     if err != nil {
         log.Fatal(err)
     }
- 
+
+    // Run migrations
+    // migrations.RunMigrations(connStr)
+
     // Set up the repository, service, and controllers
     repo := repositories.NewReportRepository()
     service := services.NewReportService(repo)
