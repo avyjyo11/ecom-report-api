@@ -9,3 +9,9 @@ CREATE INDEX idx_products_category ON Products(category);
 
 -- Index on Customers for location filtering
 CREATE INDEX idx_customers_location ON Customers(location);
+
+-- Index on Customers for singup date filtering
+CREATE INDEX idx_customers_signup_date ON customers(signup_date);
+
+-- Index on Customers for singup date filtering
+CREATE INDEX idx_customers_lifetime_value ON customers(lifetime_value);

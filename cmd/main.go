@@ -35,6 +35,7 @@ func main() {
 
     router := chi.NewRouter()
     router.Get("/reports/sales", reportController.GetSalesReport)
+    router.Get("/reports/customers", reportController.GetCustomersReport)
 
     // Start the server
     log.Println("Server started on port 8080")

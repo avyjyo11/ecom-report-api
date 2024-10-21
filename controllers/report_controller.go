@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/avyjyo11/ecom-report-api/services"
@@ -31,8 +32,31 @@ func (rc *ReportController) GetSalesReport(w http.ResponseWriter, r *http.Reques
     }
 
     // Add logic to retrieve filter params from the request
-    report, err := rc.Service.GenerateSalesReport(filters)  // Business logic goes in the service layer
+    report, err := rc.Service.GenerateSalesReport(filters)
+
     if err != nil {
+        log.Fatalln("error query", err);
+        http.Error(w, "Error generating report", http.StatusInternalServerError)
+        return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(report)
+}
+
+// GetSalesReport generates a customers report
+func (rc *ReportController) GetCustomersReport(w http.ResponseWriter, r *http.Request) {
+    filters := types.CustomerReportFilters{
+        StartDate: r.URL.Query().Get("signup_start_date"),
+        EndDate:   r.URL.Query().Get("signup_end_date"),
+        LifetimeValue:  r.URL.Query().Get("lifetiem_value"),
+    }
+
+    // Add logic to retrieve filter params from the request
+    report, err := rc.Service.GenerateCustomerReports(filters)
+
+    if err != nil {
+        log.Fatalln("error query", err);
         http.Error(w, "Error generating report", http.StatusInternalServerError)
         return
     }
