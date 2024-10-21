@@ -40,9 +40,9 @@ type TotalRevenue struct {
 }
 
 type SalesReport struct {
-	TotalSales int32
+	TotalSales float32
 	ProductsSold int32
-	AvgOrderValue int32
+	AvgOrderValue float32
 }
 
 type SalesResponse struct {

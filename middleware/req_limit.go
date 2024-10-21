@@ -27,7 +27,7 @@ type client struct {
 func ReqLimit(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip := r.RemoteAddr
-		log.Println("Blocked IP", ip)
+		log.Println("IP", ip)
 
 		mu.Lock()
 		defer mu.Unlock()

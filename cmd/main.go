@@ -17,6 +17,7 @@ import (
 func main() {
     // Load configuration and initialize the DB connection pool
     cfg := config.LoadConfig()
+  
     connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
         cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.SSLMode)
 
