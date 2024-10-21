@@ -8,9 +8,9 @@ import (
 	"github.com/avyjyo11/ecom-report-api/config"
 	"github.com/avyjyo11/ecom-report-api/controllers"
 	"github.com/avyjyo11/ecom-report-api/db"
+	"github.com/avyjyo11/ecom-report-api/middleware"
 	"github.com/avyjyo11/ecom-report-api/repositories"
 	"github.com/avyjyo11/ecom-report-api/services"
-
 	"github.com/go-chi/chi/v5"
 )
 
@@ -34,6 +34,8 @@ func main() {
     reportController := controllers.NewReportController(service)
 
     router := chi.NewRouter()
+    router.Use(middleware.ReqLimit)
+     
     router.Get("/reports/sales", reportController.GetSalesReport)
     router.Get("/reports/customers", reportController.GetCustomersReport)
 
